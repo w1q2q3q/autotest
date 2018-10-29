@@ -21,7 +21,7 @@
               <i class="el-icon-menu"></i>
               <span slot="title">用户管理</span>
             </template>
-            <el-menu-item index="2-1"><router-link to="/">账号管理</router-link></el-menu-item>
+            <el-menu-item index="2-1"><router-link to="/people">账号管理</router-link></el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
@@ -61,6 +61,7 @@
           </el-radio-group>
         </el-header>
         <el-main style="background-color: #f0f8ff">
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>

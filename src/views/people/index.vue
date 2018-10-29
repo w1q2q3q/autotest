@@ -1,4 +1,5 @@
 <template>
+  <div>
   <el-row :gutter="20" style="padding-bottom: 20px;">
     <el-col :span="16" style="padding-left: 30px">
       <el-breadcrumb separator="/">
@@ -60,6 +61,7 @@
       </el-pagination>
     </el-col>
   </el-row>
+  </div>
 </template>
 
 <script>
