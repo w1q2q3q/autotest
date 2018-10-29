@@ -13,7 +13,7 @@
               <i class="el-icon-location"></i>
               <span slot="title">首页</span>
             </template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
+            <el-menu-item index="1-1">项目动态</el-menu-item>
             <el-menu-item index="1-2">选项2</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
@@ -28,14 +28,15 @@
               <i class="el-icon-document"></i>
               <span slot="title">项目管理</span>
             </template>
-            <el-menu-item index="3-1"><router-link to="project">项目管理</router-link></el-menu-item>
+            <el-menu-item index="3-1"><router-link to="/project">项目管理</router-link></el-menu-item>
           </el-submenu>
           <el-submenu index="4" >
             <template slot="title">
               <i class="el-icon-document"></i>
               <span slot="title">用例管理</span>
             </template>
-            <el-menu-item index="4-1">用例管理</el-menu-item>
+            <el-menu-item index="4-1"><router-link to="/testcase">用例列表</router-link></el-menu-item>
+            <el-menu-item index="4-2">mock列表</el-menu-item>
           </el-submenu>
           <el-submenu index="5">
             <template slot="title">
@@ -43,6 +44,7 @@
               <span slot="title">任务管理</span>
             </template>
             <el-menu-item index="5-1">任务管理</el-menu-item>
+            <el-menu-item index="5-2">定时任务管理</el-menu-item>
           </el-submenu>
           <el-submenu index="6">
             <template slot="title">
@@ -50,6 +52,13 @@
               <span slot="title">节点管理</span>
             </template>
             <el-menu-item index="6-1">节点管理</el-menu-item>
+          </el-submenu>
+          <el-submenu index="7">
+            <template slot="title">
+              <i class="el-icon-document"></i>
+              <span slot="title">测试报告</span>
+            </template>
+            <el-menu-item index="7-1">测试报告</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -72,7 +81,7 @@ export default {
   name: 'index',
   data () {
     return {
-      openeds: ['2'],
+      // openeds: ['2'],
       multipleSelection: [],
       isCollapse: false
     }
