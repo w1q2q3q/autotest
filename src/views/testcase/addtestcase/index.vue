@@ -82,7 +82,31 @@
        </el-tab-pane>
        <el-tab-pane label="断言" name="third">
          <el-form-item label="断言：" :label-width="formLabelWidth">
-           <el-input v-model="form.describe" autocomplete="off" style="width: 350px"></el-input>
+           <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addTemp2">新增断言</el-button>
+           <br/>
+           <el-radio v-model="radio2" label="0">无</el-radio>
+           <el-radio v-model="radio2" label="1">添加断言</el-radio>
+           <el-table class="template-list" :data="tempList2" v-if="radio2==1" style="width: 70%">
+             <el-table-column label="信息头">
+               <div slot-scope="scope2">
+                 <el-select v-model="scope2.row.pre" placeholder="信息头类型">
+                   <el-option v-for="item in imageType2" :key="item.value" :label="item.label" :value="item.value">
+                   </el-option>
+                 </el-select>
+               </div>
+             </el-table-column>
+             <el-table-column label="参数">
+               <div slot-scope="scope2">
+                 <el-input v-model="scope2.row.name" placeholder="请填写参数"></el-input>
+               </div>
+             </el-table-column>
+             <el-table-column label="操作">
+               <div slot-scope="scope2">
+                 <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete2(scope2.$index,scope2.row)">删除
+                 </el-button>
+               </div>
+             </el-table-column>
+           </el-table>
          </el-form-item>
          <el-form-item label="优先级：" :label-width="formLabelWidth">
            <el-input v-model="form.describe" autocomplete="off" style="width: 350px"></el-input>
@@ -108,6 +132,7 @@ export default {
       formLabelWidth: '120px',
       tempList: [],
       tempList1: [],
+      tempList2: [],
       imageType: [{
         label: 'Cookies',
         value: 'Cookies'
@@ -116,8 +141,9 @@ export default {
         label: 'Cookies',
         value: 'Cookies'
       }],
-      radio: '1',
-      radio1: '0'
+      radio: '0',
+      radio1: '0',
+      radio2: '0'
     }
   },
   methods: {
@@ -146,6 +172,21 @@ export default {
     // 删除
     handleDelete1 ($index, row) {
       this.tempList1.splice($index, 1)
+      this.$message({
+        type: 'success',
+        message: '删除成功!'
+      })
+    },
+    addTemp2 () {
+      this.tempList2.push({
+        name: '',
+        pre: '',
+        next: ''
+      })
+    },
+    // 删除
+    handleDelete2 ($index, row) {
+      this.tempList2.splice($index, 1)
       this.$message({
         type: 'success',
         message: '删除成功!'
