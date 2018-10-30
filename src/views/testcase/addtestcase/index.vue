@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<template>
   <div>
    <el-form :model="form">
      <el-tabs v-model="activeName" @tab-click="handleClick">

@@ -119,7 +119,7 @@ export default {
   .tilte1{
      height:7%;
      /*background-image: url('../../image/5.jpg');*/
-   /*background-color: antiquewhite;*/
+     /*background-color: antiquewhite;*/
   }
 
 </style>
