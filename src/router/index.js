@@ -4,6 +4,7 @@ import menu from '@/views/menu/index'
 import people from '@/views/people/index'
 import project from '@/views/project/index'
 import testcase from '@/views/testcase/index'
+import addtestcase from '@/views/testcase/addtestcase/index'
 Vue.use(Router)
 
 export default new Router({
@@ -29,6 +30,11 @@ export default new Router({
           path: 'testcase',
           name: '用例',
           component: testcase
+        },
+        {
+          path: 'addtestcase',
+          name: '添加用例',
+          component: addtestcase
         }
       ]
     }

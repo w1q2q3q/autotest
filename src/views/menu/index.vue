@@ -1,7 +1,8 @@
 <template>
+  <div>
     <el-container>
       <el-aside width="auto" style="height: 900px">
-        <div style="height:7%;background-color: darkcyan">
+        <div class="tilte1">
           <!--<el-radio-group v-model="isCollapse">-->
             <!--<el-radio-button :label="false">展开</el-radio-button>-->
             <!--<el-radio-button :label="true">收起</el-radio-button>-->
@@ -35,8 +36,9 @@
               <i class="el-icon-document"></i>
               <span slot="title">用例管理</span>
             </template>
-            <el-menu-item index="4-1"><router-link to="/testcase">用例列表</router-link></el-menu-item>
-            <el-menu-item index="4-2">mock列表</el-menu-item>
+            <el-menu-item index="4-1"><router-link to="/addtestcase">添加用例</router-link></el-menu-item>
+            <el-menu-item index="4-2"><router-link to="/testcase">用例列表</router-link></el-menu-item>
+            <el-menu-item index="4-3">mock列表</el-menu-item>
           </el-submenu>
           <el-submenu index="5">
             <template slot="title">
@@ -63,17 +65,18 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header style="background-color: #faebd7">
+        <el-header>
           <el-radio-group v-model="isCollapse">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
           </el-radio-group>
         </el-header>
-        <el-main style="background-color: #f0f8ff">
+        <el-main class="note2">
           <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
+  </div>
 </template>
 
 <script>
@@ -83,7 +86,15 @@ export default {
     return {
       // openeds: ['2'],
       multipleSelection: [],
-      isCollapse: false
+      isCollapse: false,
+      note: {
+        backgroundImage: 'url(' + require('../../image/1.jpg') + ')',
+        backgroundSize: 'auto'
+      },
+      note1: {
+        backgroundImage: 'url(' + require('../../image/6.jpg') + ')',
+        backgroundSize: 'auto'
+      }
     }
   }
 }
@@ -93,15 +104,22 @@ export default {
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 93%;
-    background-color : beige;
+    /*background-image: url('../../image/6.jpg');*/
+    /*background-color: azure;*/
+    /*background-color : beige;*/
     text-color: #fff;
     active-text-color: #ffd04b
   }
-  a {
+  a{
      text-decoraction: none;
    }
   .router-link-active {
     text-decoration: none;
+  }
+  .tilte1{
+     height:7%;
+     /*background-image: url('../../image/5.jpg');*/
+   /*background-color: antiquewhite;*/
   }
 
 </style>
