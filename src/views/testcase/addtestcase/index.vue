@@ -207,11 +207,12 @@ export default {
     },
     onSubmit () {
       this.$http.post('http://localhost:8081/TestCass/addCass', JSON.stringify(this.form)).then(response => {
-        console.log(response.data)
-        this.tableData3 = response.data
+        alert('添加成功')
+        this.$router.push({path: '/testcase'})
       },
       response => {
         console.log('error')
+        alert('error')
       })
       console.log('submit!')
     }
