@@ -121,7 +121,7 @@
            </div>
          </el-form-item>
        </el-tab-pane>
-       <el-tab-pane label="结果" name="fourth"></el-tab-pane>
+       <!--<el-tab-pane label="结果" name="fourth"></el-tab-pane>-->
        <el-tab-pane label="数据提取" name="list"></el-tab-pane>
      </el-tabs>
      <el-button type="primary" @click="onSubmit">立即创建</el-button>

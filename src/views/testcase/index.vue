@@ -52,7 +52,7 @@
       <el-col :span="20" :offset="1" style="padding-top: 30px">
         <el-table
           ref="multipleTable"
-          :data="tableData3"
+          :data="tableData"
           tooltip-effect="dark"
           align="center"
           height="650"
@@ -124,9 +124,25 @@ export default {
       form: {
         name: '',
         region: '',
-        methodc: ''
+        methodc: '',
+        tableData: []
       },
       formLabelWidth: '120px'
+    }
+  },
+  created () {
+    this.getList()
+  },
+  methods: {
+    // GET /someUrl
+    getList () {
+      this.$http.get('http://localhost:8081/TestCass/getCassList').then(response => {
+        console.log(response.data)
+        this.tableData = response.data
+      },
+      response => {
+        console.log('error')
+      })
     }
   }
 }
