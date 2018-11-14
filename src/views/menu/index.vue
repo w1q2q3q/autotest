@@ -65,8 +65,8 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header>
-          <el-radio-group v-model="isCollapse">
+        <el-header style="background-color: antiquewhite">
+          <el-radio-group size="small" v-model="isCollapse">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
           </el-radio-group>
@@ -119,7 +119,7 @@ export default {
   .tilte1{
      height:7%;
      /*background-image: url('../../image/5.jpg');*/
-     /*background-color: antiquewhite;*/
+     background-color: lightskyblue;
   }
 
 </style>

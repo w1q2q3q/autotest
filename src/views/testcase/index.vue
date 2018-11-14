@@ -48,15 +48,14 @@
         <el-button type="primary" @click="dialogFormVisible = false">提 交</el-button>
       </div>
     </el-dialog>
-    <el-row :gutter="20">
-      <el-col :span="20" :offset="1" style="padding-top: 30px">
+    <el-row :gutter="24">
+      <el-col :span="24" style="padding-top: 30px">
         <el-table
           ref="multipleTable"
           :data="tableData"
           tooltip-effect="dark"
           align="center"
-          height="650"
-          @selection-change="handleSelectionChange">
+          height="650" size="small">
           <el-table-column
             type="selection"
             width="50">
@@ -67,27 +66,34 @@
             width="100">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="Cassname"
             label="用例名称"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="model"
-            label="所属模块"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="api"
-            label="Api"
             width="150">
           </el-table-column>
           <el-table-column
-            prop="edition"
+            prop="Cassmodel"
+            label="所属模块"
+            width="130">
+          </el-table-column>
+          <el-table-column
+            prop="Url"
+            label="Api"
+            width="220">
+            <template slot-scope="scope">
+              <p style="color: #409EFF">
+                <el-tag size="mini" type="success" v-if="scope.row.Method==1">Get</el-tag>
+                <el-tag size="mini" type="warning" v-if="scope.row.Method==0">Post</el-tag>
+                  {{ scope.row.Url}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="Method"
             label="版本"
             width="150">
           </el-table-column>
           <el-table-column
-            prop="describe"
+            prop="Cassdescribe"
             label="描述"
             width="150">
           </el-table-column>
@@ -100,7 +106,7 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+              <!--<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
               <el-button type="text" size="small">编辑</el-button>
             </template>
           </el-table-column>
@@ -118,31 +124,30 @@
 <script>
 export default {
   name: 'index',
+  mounted: function () {
+    this.$http.get('http://localhost:8081/TestCass/getCassList').then(response => {
+      console.log(response.data)
+      this.tableData = response.data
+    },
+    response => {
+      console.log('error')
+    })
+  },
   data () {
     return {
       dialogFormVisible: false,
       form: {
         name: '',
         region: '',
-        methodc: '',
-        tableData: []
+        methodc: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      tableData: []
     }
-  },
-  created () {
-    this.getList()
   },
   methods: {
     // GET /someUrl
     getList () {
-      this.$http.get('http://localhost:8081/TestCass/getCassList').then(response => {
-        console.log(response.data)
-        this.tableData = response.data
-      },
-      response => {
-        console.log('error')
-      })
     }
   }
 }
