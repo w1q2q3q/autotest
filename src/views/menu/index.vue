@@ -117,7 +117,7 @@ export default {
     text-decoration: none;
   }
   .tilte1{
-     height:7%;
+     height:60px;
      /*background-image: url('../../image/5.jpg');*/
      background-color: lightskyblue;
   }
