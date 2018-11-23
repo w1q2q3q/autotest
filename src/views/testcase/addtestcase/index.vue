@@ -8,7 +8,7 @@
        </div>
        <el-col :span="24">
          <el-tabs v-model="activeName" @tab-click="handleClick" >
-           <el-tab-pane label="接口信息管理" name="first">
+           <el-tab-pane label="接口信息管理2" name="first">
              <el-form-item label="用例名称：" :label-width="formLabelWidth" prop="Cassname" >
                <el-input v-model="form.Cassname" autocomplete="off" style="width: 350px"></el-input>
              </el-form-item>
@@ -17,7 +17,7 @@
              </el-form-item>
              <el-form-item label="所属模块：" :label-width="formLabelWidth">
                <el-select v-model="form.Cassmodel" placeholder="请选择模块">
-                 <el-option label="POST"  value="0"></el-option>
+                 <el-option label="POST" value="0"></el-option>
                  <el-option label="GET" value="1"></el-option>
                </el-select>
              </el-form-item>
@@ -41,10 +41,11 @@
                 <el-table class="template-list" :data="form.HerderList"  v-model="form.HerderList" style="width: 70%">
                  <el-table-column label="信息头">
                    <div slot-scope="scope">
-                     <el-select v-model="scope.row.hname" placeholder="信息头类型">
-                       <el-option v-for="item in imageType" :key="item.value" :label="item.label" :value="item.value">
-                       </el-option>
-                     </el-select>
+                     <!--<el-select v-model="scope.row.hname" placeholder="信息头类型">-->
+                       <!--<el-option v-for="item in imageType" :key="item.value" :label="item.label" :value="item.value">-->
+                       <!--</el-option>-->
+                     <!--</el-select>-->
+                     <el-input v-model="scope.row.hname" placeholder="请填写参数"></el-input>
                    </div>
                  </el-table-column>
                  <el-table-column label="参数">
@@ -72,10 +73,11 @@
                  <el-table class="template-list" :data="form.CookiesList"  v-model="form.CookiesList" style="width: 70%">
                    <el-table-column label="Cookies">
                      <div slot-scope="scope">
-                       <el-select v-model="scope.row.cname" placeholder="Cookie类型">
-                         <el-option v-for="item in imageType" :key="item.value" :label="item.label" :value="item.value">
-                         </el-option>
-                       </el-select>
+                       <!--<el-select v-model="scope.row.cname" placeholder="Cookie类型">-->
+                         <!--<el-option v-for="item in imageType" :key="item.value" :label="item.label" :value="item.value">-->
+                         <!--</el-option>-->
+                       <!--</el-select>-->
+                       <el-input v-model="scope.row.cname" placeholder="请填写参数"></el-input>
                      </div>
                    </el-table-column>
                    <el-table-column label="参数">
@@ -162,7 +164,9 @@
            <el-tab-pane label="数据提取" name="list"></el-tab-pane>
            <el-tab-pane label="报告" name="report">
              <el-input v-model="code" autocomplete="off" :data="code"></el-input>
-             <el-input type="textarea" v-model="report" :rows="10" :data="report" ></el-input>
+             <div>
+               <pre style="width: 500px">{{report | json}}}</pre>
+             </div>
            </el-tab-pane>
          </el-tabs>
        </el-col>

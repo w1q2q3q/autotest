@@ -7,6 +7,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
+import 'highlight.js/styles/agate.css'
+import VueHighlightJS from 'vue-highlightjs'
+Vue.use(VueHighlightJS)
 Vue.use(VueResource)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -15,7 +18,7 @@ Vue.use(Vuex)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  router
 })

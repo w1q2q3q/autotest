@@ -78,7 +78,7 @@
           <el-table-column
             prop="Url"
             label="Api"
-            width="220">
+            width="380">
             <template slot-scope="scope">
               <p style="color: #409EFF">
                 <el-tag size="mini" type="success" v-if="scope.row.Method==1">Get</el-tag>
@@ -107,7 +107,7 @@
             width="100">
             <template slot-scope="scope">
               <!--<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
-              <el-button type="text" size="small">编辑</el-button>
+              <el-button type="text" size="small" @click="edittestcass(scope.row.id)">编辑{{scope.row.id}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -147,7 +147,10 @@ export default {
   },
   methods: {
     // GET /someUrl
-    getList () {
+    edittestcass (id) {
+      this.$router.push({
+        path: `/edittestcase/${id}`
+      })
     }
   }
 }

@@ -8,7 +8,8 @@
             <!--<el-radio-button :label="true">收起</el-radio-button>-->
           <!--</el-radio-group>-->
         </div>
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" unique-opened="false" :default-openeds="openeds" >
+        <el-menu default-active="1-4-1" class="el-menu-vertical-demo"  :collapse="isCollapse" unique-opened >
+          <!--:default-openeds="openeds"-->
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
