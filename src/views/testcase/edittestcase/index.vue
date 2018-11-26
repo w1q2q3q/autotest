@@ -152,32 +152,32 @@
                   <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addAssert">新增断言</el-button>
                   <br/>
                   <el-table class="template-list" :data="form.AssertList"  v-model="form.AssertList" style="width: 70%">
-                    <el-table-column label="断言">
+                    <el-table-column label="断言内容">
                       <div slot-scope="scope2">
-                        <el-select v-model="scope2.row.arequest" placeholder="断言">
-                          <el-option label="Json"  :value="0"></el-option>
-                          <el-option label="Text" :value="1"></el-option>
-                          <el-option label="正则匹配" :value="2"></el-option>
+                        <el-select v-model="scope2.row.requestdate" placeholder="断言内容">
+                          <el-option label="响应内容Json"  :value="0"></el-option>
+                          <el-option label="响应内容Text" :value="1"></el-option>
+                          <el-option label="响应Code" :value="2"></el-option>
                         </el-select>
                       </div>
                     </el-table-column>
-                    <el-table-column label="参数">
+                    <el-table-column label="断言参数">
                       <div slot-scope="scope2">
-                        <el-input v-model="scope2.row.amethod" placeholder="请填写参数"></el-input>
+                        <el-input v-model="scope2.row.aname" placeholder="请填写参数"></el-input>
                       </div>
                     </el-table-column>
                     <el-table-column label="方法">
                       <div slot-scope="scope2">
-                        <el-select v-model="scope2.row.aname" placeholder="信息头类型">
+                        <el-select v-model="scope2.row.amethod" placeholder="信息头类型">
                           <el-option label="等于"  :value="0"></el-option>
                           <el-option label="包含" :value="1"></el-option>
                           <el-option label="正则匹配" :value="2"></el-option>
                         </el-select>
                       </div>
                     </el-table-column>
-                    <el-table-column label="参数">
+                    <el-table-column label="结果参数">
                       <div slot-scope="scope2">
-                        <el-input v-model="scope2.row.aparamter" placeholder="请填写参数"></el-input>
+                        <el-input v-model="scope2.row.repsonedate" placeholder="请填写参数"></el-input>
                       </div>
                     </el-table-column>
                     <el-table-column label="操作">
@@ -196,7 +196,36 @@
               <el-tag>状态码：{{code}}</el-tag>
                <br/>
               <el-tabs  v-model="reportactive" @tab-click="handleClick">
-                <el-tab-pane style="width: 700px" label="断言结果" name="AssertResult">
+                <el-tab-pane style="width: 900px" label="断言结果" name="AssertResult">
+                  <el-table
+                    :data="AssertData"
+                    style="width:100%">
+                    <el-table-column
+                      prop="requestdate"
+                      label="断言内容"
+                      width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="aname"
+                      label="断言参数"
+                      width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="amethod"
+                      label="方法"
+                      width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="repsonedate"
+                      label="结果参数"
+                      width="180">
+                    </el-table-column>
+                    <el-table-column
+                      prop="result"
+                      label="断言结果"
+                      width="180">
+                    </el-table-column>
+                  </el-table>
                 </el-tab-pane>
                 <el-tab-pane style="width: 700px" label="Response" name="Response">
                   <el-button size="small" type="primary" @click="jsonupdate">Json格式化</el-button>
@@ -229,6 +258,7 @@ export default {
       report: '',
       code: '',
       loading: false,
+      AssertData: [],
       form: {
         Cassname: '',
         Cassdescribe: '',
@@ -304,10 +334,10 @@ export default {
     },
     addAssert () {
       this.form.AssertList.push({
-        arequest: '',
-        amethod: '',
+        requestdate: '',
         aname: '',
-        aparamter: ''
+        amethod: '',
+        repsonedate: ''
       })
     },
     // 删除
