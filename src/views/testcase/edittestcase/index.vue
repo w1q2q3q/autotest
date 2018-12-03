@@ -154,7 +154,7 @@
                   <el-table class="template-list" :data="form.AssertList"  v-model="form.AssertList" style="width: 70%">
                     <el-table-column label="断言内容">
                       <div slot-scope="scope2">
-                        <el-select v-model="scope2.row.requestdate" placeholder="断言内容">
+                        <el-select v-model="scope2.row.responsetype" placeholder="断言内容">
                           <el-option label="响应内容Json"  :value="0"></el-option>
                           <el-option label="响应内容Text" :value="1"></el-option>
                           <el-option label="响应Code" :value="2"></el-option>
@@ -163,12 +163,12 @@
                     </el-table-column>
                     <el-table-column label="断言参数">
                       <div slot-scope="scope2">
-                        <el-input v-model="scope2.row.aname" placeholder="请填写参数"></el-input>
+                        <el-input v-model="scope2.row.assertparameter" placeholder="请填写参数"></el-input>
                       </div>
                     </el-table-column>
                     <el-table-column label="方法">
                       <div slot-scope="scope2">
-                        <el-select v-model="scope2.row.amethod" placeholder="信息头类型">
+                        <el-select v-model="scope2.row.assertmethod" placeholder="信息头类型">
                           <el-option label="等于"  :value="0"></el-option>
                           <el-option label="包含" :value="1"></el-option>
                           <el-option label="正则匹配" :value="2"></el-option>
@@ -177,7 +177,7 @@
                     </el-table-column>
                     <el-table-column label="结果参数">
                       <div slot-scope="scope2">
-                        <el-input v-model="scope2.row.repsonedate" placeholder="请填写参数"></el-input>
+                        <el-input v-model="scope2.row.responsedate" placeholder="请填写参数"></el-input>
                       </div>
                     </el-table-column>
                     <el-table-column label="操作">
@@ -201,22 +201,22 @@
                     :data="AssertData"
                     style="width:100%">
                     <el-table-column
-                      prop="requestdate"
+                      prop="responsetype"
                       label="断言内容"
                       width="180">
                     </el-table-column>
                     <el-table-column
-                      prop="aname"
+                      prop="assertparameter"
                       label="断言参数"
                       width="180">
                     </el-table-column>
                     <el-table-column
-                      prop="amethod"
+                      prop="assertmethod"
                       label="方法"
                       width="180">
                     </el-table-column>
                     <el-table-column
-                      prop="repsonedate"
+                      prop="responsedate"
                       label="结果参数"
                       width="180">
                     </el-table-column>
@@ -334,10 +334,10 @@ export default {
     },
     addAssert () {
       this.form.AssertList.push({
-        requestdate: '',
-        aname: '',
-        amethod: '',
-        repsonedate: ''
+        responsetype: '',
+        assertparameter: '',
+        assertmethod: '',
+        responsedate: ''
       })
     },
     // 删除
