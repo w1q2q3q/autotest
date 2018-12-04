@@ -4,19 +4,19 @@
       <el-row>
         <div style="float: left">
           <el-button size="small" type="success" @click="onSubmit('form')">立即创建</el-button>
-          <el-button size="small" type="success" @click="runCass('form')">调试 </el-button>
+          <el-button size="small" type="success" @click="runCase('form')">调试 </el-button>
         </div>
         <el-col :span="24">
           <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading">
             <el-tab-pane label="接口信息管理1" name="first">
-              <el-form-item label="用例名称：" :label-width="formLabelWidth" prop="Cassname" >
-                <el-input v-model="form.Cassname" autocomplete="off" style="width: 350px"></el-input>
+              <el-form-item label="用例名称：" :label-width="formLabelWidth" prop="Casename" >
+                <el-input v-model="form.Casename" autocomplete="off" style="width: 350px"></el-input>
               </el-form-item>
               <el-form-item label="用例描述：" :label-width="formLabelWidth">
-                <el-input v-model="form.Cassdescribe" autocomplete="off" style="width: 350px"></el-input>
+                <el-input v-model="form.Casedescribe" autocomplete="off" style="width: 350px"></el-input>
               </el-form-item>
               <el-form-item label="所属模块：" :label-width="formLabelWidth">
-                <el-select v-model="form.Cassmodel" placeholder="请选择模块">
+                <el-select v-model="form.Casemodel" placeholder="请选择模块">
                   <el-option label="POST"  :value="0"></el-option>
                   <el-option label="GET" :value="1"></el-option>
                 </el-select>
@@ -144,11 +144,11 @@
             </el-tab-pane>
             <el-tab-pane label="断言" name="third">
               <el-form-item label="断言：" :label-width="formLabelWidth">
-                <el-radio-group v-model="form.CassAssert">
+                <el-radio-group v-model="form.CaseAssert">
                   <el-radio :label="0">无</el-radio>
                   <el-radio :label="1">添加断言</el-radio>
                 </el-radio-group>
-                <div v-if="form.CassAssert==1">
+                <div v-if="form.CaseAssert==1">
                   <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addAssert">新增断言</el-button>
                   <br/>
                   <el-table class="template-list" :data="form.AssertList"  v-model="form.AssertList" style="width: 70%">
@@ -175,11 +175,11 @@
                         </el-select>
                       </div>
                     </el-table-column>
-                    <el-table-column label="结果参数">
-                      <div slot-scope="scope2">
-                        <el-input v-model="scope2.row.responsedate" placeholder="请填写参数"></el-input>
-                      </div>
-                    </el-table-column>
+                    <!--<el-table-column label="结果参数">-->
+                      <!--<div slot-scope="scope2">-->
+                        <!--<el-input v-model="scope2.row.responsedate" placeholder="请填写参数"></el-input>-->
+                      <!--</div>-->
+                    <!--</el-table-column>-->
                     <el-table-column label="操作">
                       <div slot-scope="scope2">
                         <el-button size="mini" type="danger" icon="el-icon-delete" @click="AssertDelete(scope2.$index,scope2.row)">删除
@@ -196,9 +196,9 @@
               <el-tag>状态码：{{code}}</el-tag>
                <br/>
               <el-tabs  v-model="reportactive" @tab-click="handleClick">
-                <el-tab-pane style="width: 900px" label="断言结果" name="AssertResult">
+                <el-tab-pane style="width: 1300px" label="断言结果" name="AssertResult">
                   <el-table
-                    :data="AssertData"
+                    :data="assertList"
                     style="width:100%">
                     <el-table-column
                       prop="responsetype"
@@ -208,7 +208,7 @@
                     <el-table-column
                       prop="assertparameter"
                       label="断言参数"
-                      width="180">
+                      width="280">
                     </el-table-column>
                     <el-table-column
                       prop="assertmethod"
@@ -216,13 +216,18 @@
                       width="180">
                     </el-table-column>
                     <el-table-column
-                      prop="responsedate"
+                      prop="response"
                       label="结果参数"
+                      width="280">
+                    </el-table-column>
+                    <el-table-column
+                      prop="assertresult"
+                      label="断言结果"
                       width="180">
                     </el-table-column>
                     <el-table-column
                       prop="result"
-                      label="断言结果"
+                      label="状态"
                       width="180">
                     </el-table-column>
                   </el-table>
@@ -230,13 +235,13 @@
                 <el-tab-pane style="width: 700px" label="Response" name="Response">
                   <el-button size="small" type="primary" @click="jsonupdate">Json格式化</el-button>
                   <div>
-                    <pre v-highlightjs="report"><code style="height: 400px"></code></pre>
+                    <pre v-highlightjs="caserequest"><code style="height: 400px"></code></pre>
                   </div>
                 </el-tab-pane>
                 <el-tab-pane style="width: 700px" label="文本显示" name="jsons">
                   <el-button size="small" type="primary" @click="jsonupdate">Json格式化</el-button>
                   <div>
-                    <el-input  type="textarea" rows="20" v-model="report" :data="report"  v-highlightjs></el-input>
+                    <el-input  type="textarea" rows="20" v-model="caserequest" :data="caserequest"  v-highlightjs></el-input>
                   </div>
                 </el-tab-pane>
               </el-tabs>
@@ -255,15 +260,15 @@ export default {
       activeName: 'first',
       reportactive: 'AssertResult',
       dialogFormVisible: false,
-      report: '',
+      caserequest: '',
       code: '',
       loading: false,
-      AssertData: [],
+      assertList: [],
       form: {
-        Cassname: '',
-        Cassdescribe: '',
+        Casename: '',
+        Casedescribe: '',
         Url: '',
-        Cassmodel: '0',
+        Casemodel: '0',
         Method: '0',
         HerderList: [],
         Cookies: '0',
@@ -273,7 +278,7 @@ export default {
         AssertList: [],
         Herder: '0',
         Parameter: '0',
-        CassAssert: '0'
+        CaseAssert: '0'
       },
       formLabelWidth: '120px',
       imageType: [{
@@ -285,7 +290,7 @@ export default {
         value: 'Cookies'
       }],
       rules: {
-        Cassname: [
+        Casename: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
@@ -293,7 +298,7 @@ export default {
     }
   },
   mounted: function () {
-    this.$http.get(`http://localhost:8081/TestCass/editCass/${this.$route.params.id}`).then(response => {
+    this.$http.get(`http://localhost:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
       console.log(response.data)
       this.form = response.data
     },
@@ -336,8 +341,7 @@ export default {
       this.form.AssertList.push({
         responsetype: '',
         assertparameter: '',
-        assertmethod: '',
-        responsedate: ''
+        assertmethod: ''
       })
     },
     // 删除
@@ -368,7 +372,7 @@ export default {
     onSubmit (form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          this.$http.post('http://localhost:8081/TestCass/addCass', JSON.stringify(this.form)).then(response => {
+          this.$http.post('http://localhost:8081/TestCase/addCase', JSON.stringify(this.form)).then(response => {
             alert('添加成功')
             this.$router.push({path: '/testcase'})
           },
@@ -383,15 +387,16 @@ export default {
         }
       })
     },
-    runCass (form) {
+    runCase (form) {
       this.loading = true
       this.$refs[form].validate((valid) => {
         if (valid) {
-          this.$http.post('http://localhost:8081/TestCass/runCass', JSON.stringify(this.form)).then(response => {
+          this.$http.post('http://localhost:8081/TestCase/runCase', JSON.stringify(this.form)).then(response => {
             alert('成功')
             this.activeName = 'report'
-            this.report = response.data.cassrequest
+            this.caserequest = response.data.caserequest
             this.code = response.data.code
+            this.assertList = response.data.assertList
           },
           response => {
             alert('失败')
@@ -405,7 +410,7 @@ export default {
     },
     jsonupdate: function () {
       try {
-        this.report = JSON.stringify(JSON.parse(this.report), null, 2)
+        this.caserequest = JSON.stringify(JSON.parse(this.caserequest), null, 2)
       } catch (e) {
         alert('解析失败')
       }

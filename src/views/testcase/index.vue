@@ -66,12 +66,12 @@
             width="100">
           </el-table-column>
           <el-table-column
-            prop="Cassname"
+            prop="Casename"
             label="用例名称"
             width="150">
           </el-table-column>
           <el-table-column
-            prop="Cassmodel"
+            prop="Casemodel"
             label="所属模块"
             width="130">
           </el-table-column>
@@ -93,7 +93,7 @@
             width="150">
           </el-table-column>
           <el-table-column
-            prop="Cassdescribe"
+            prop="Casedescribe"
             label="描述"
             width="150">
           </el-table-column>
@@ -107,7 +107,7 @@
             width="100">
             <template slot-scope="scope">
               <!--<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
-              <el-button type="text" size="small" @click="edittestcass(scope.row.id)">编辑{{scope.row.id}}</el-button>
+              <el-button type="text" size="small" @click="edittestcase(scope.row.id)">编辑{{scope.row.id}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -125,7 +125,7 @@
 export default {
   name: 'index',
   mounted: function () {
-    this.$http.get('http://localhost:8081/TestCass/getCassList').then(response => {
+    this.$http.get('http://localhost:8081/TestCase/getCaseList').then(response => {
       console.log(response.data)
       this.tableData = response.data
     },
@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     // GET /someUrl
-    edittestcass (id) {
+    edittestcase (id) {
       this.$router.push({
         path: `/edittestcase/${id}`
       })
