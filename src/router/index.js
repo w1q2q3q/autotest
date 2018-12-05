@@ -6,6 +6,7 @@ import project from '@/views/project/index'
 import testcase from '@/views/testcase/index'
 import addtestcase from '@/views/testcase/addtestcase/index'
 import edittestcase from '@/views/testcase/edittestcase/index'
+import testmodel from '@/views/testmodel/index'
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +42,11 @@ export default new Router({
           path: 'edittestcase/:id',
           name: '修改用例',
           component: edittestcase
+        },
+        {
+          path: 'testmodel/:id',
+          name: '项目模块',
+          component: testmodel
         }
       ]
     }

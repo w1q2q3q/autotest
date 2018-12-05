@@ -3,25 +3,31 @@
     <el-row :gutter="20" style="padding-bottom: 20px;">
       <el-col :span="16" style="padding-left: 30px">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">项目管理</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">项目管理</a></el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">模块管理</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">模块管理</a></el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
     </el-row>
-    <el-button type="primary" size="small" @click="dialogVisible = true">添加项目</el-button>
-    <el-dialog title="添加项目" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
-        <el-form ref="form" :model="form" :data="form" label-width="80px">
-           <el-form-item label="项目名称">
-             <el-input v-model="form.projectname"></el-input>
-           </el-form-item>
-           <el-form-item label="项目描述">
-             <el-input v-model="form.projectdescribe"></el-input>
-           </el-form-item>
-          <el-form-item>
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="submitForm('form')">确 定</el-button>
-          </el-form-item>
-        </el-form>
+    <el-button type="primary" size="small" @click="dialogVisible = true">添加模块</el-button>
+    <el-dialog title="添加模块" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
+      <el-form ref="form" :model="form" :data="form" label-width="80px">
+        <el-form-item label="项目" prop="region">
+          <el-select v-model="form.projectid" placeholder="请选择模块">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="3"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="模块名称">
+          <el-input v-model="form.modelname"></el-input>
+        </el-form-item>
+        <el-form-item label="模块描述">
+          <el-input v-model="form.modeldescribe"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
     <el-row :gutter="20">
       <el-col :span="20" style="padding-top: 30px">
@@ -42,18 +48,18 @@
             width="100">
           </el-table-column>
           <el-table-column
-            prop="projectname"
-            label="项目名称"
+            prop="modelname"
+            label="模块名称"
             width="200">
           </el-table-column>
           <el-table-column
-            prop="projectdescribe"
-            label="项目描述"
+            prop="modeldescribe"
+            label="模块描述"
             width="200">
           </el-table-column>
           <el-table-column
             prop="number"
-            label="模块数量"
+            label="用例数量"
             width="100">
           </el-table-column>
           <el-table-column
@@ -65,7 +71,7 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button @click="Testmodel(scope.row.id)" type="text" size="small">查看</el-button>
+              <el-button @click="handleClick(scope.row.id)" type="text" size="small">查看</el-button>
               <el-button type="text" size="small">编辑</el-button>
             </template>
           </el-table-column>
@@ -81,7 +87,7 @@
         </el-pagination>
       </el-col>
     </el-row>
-    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -92,13 +98,14 @@ export default {
       dialogVisible: false,
       tableData: [],
       form: {
-        projectname: '',
-        projectdescribe: ''
+        modelname: '',
+        modeldescribe: '',
+        projectid: this.$route.params.id
       }
     }
   },
   mounted: function () {
-    this.$http.get('http://localhost:8081/TestProject/getAllProject').then(response => {
+    this.$http.get(`http://localhost:8081/TestModel/getModel/${this.$route.params.id}`).then(response => {
       console.log(response.data)
       this.tableData = response.data
     },
@@ -117,9 +124,10 @@ export default {
     submitForm (formname) {
       this.$refs[formname].validate((valid) => {
         if (valid) {
-          this.$http.post('http://localhost:8081/TestProject/addProject', JSON.stringify(this.form)).then(response => {
+          this.$http.post('http://localhost:8081/TestModel/addModel/', JSON.stringify(this.form)).then(response => {
             alert('添加成功')
             this.dialogVisible = false
+            this.$router.go(0)
             // this.$router.push({path: '/testcase'})
           },
           response => {
@@ -131,11 +139,6 @@ export default {
           console.log('error submit!!')
           return false
         }
-      })
-    },
-    Testmodel (id) {
-      this.$router.push({
-        path: `/testmodel/${id}`
       })
     }
   }
