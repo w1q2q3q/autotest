@@ -16,9 +16,17 @@
                 <el-input v-model="form.Casedescribe" autocomplete="off" style="width: 350px"></el-input>
               </el-form-item>
               <el-form-item label="所属模块：" :label-width="formLabelWidth">
-                <el-select v-model="form.Casemodel" placeholder="请选择模块">
-                  <el-option label="POST"  :value="0"></el-option>
-                  <el-option label="GET" :value="1"></el-option>
+                <!--<el-select v-model="form.Casemodel" placeholder="请选择模块">-->
+                <!--<el-option label="POST"  :value="0"></el-option>-->
+                <!--<el-option label="GET" :value="1"></el-option>-->
+                <!--</el-select>-->
+                <el-select v-model="form.Casemodel" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.id"
+                    :label="item.modelname"
+                    :value="item.id">
+                  </el-option>
                 </el-select>
               </el-form-item>
             </el-tab-pane>
@@ -32,8 +40,8 @@
               </el-form-item>
               <el-form-item label="信息头：" :label-width="formLabelWidth">
                 <el-radio-group v-model="form.Herder">
-                  <el-radio :label="0">无</el-radio>
-                  <el-radio :label="1">添加herder</el-radio>
+                  <el-radio label="0">无</el-radio>
+                  <el-radio label="1">添加herder</el-radio>
                 </el-radio-group>
                 <div v-if="form.Herder==1">
                   <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addHerder">新增信息头</el-button>
@@ -64,8 +72,8 @@
               </el-form-item>
               <el-form-item label="Cookies：" :label-width="formLabelWidth">
                 <el-radio-group v-model="form.Cookies">
-                  <el-radio :label="0">无</el-radio>
-                  <el-radio :label="1">添加Cookies</el-radio>
+                  <el-radio label="0">无</el-radio>
+                  <el-radio label="1">添加Cookies</el-radio>
                 </el-radio-group>
                 <div v-if="form.Cookies==1">
                   <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addCookies">新增Cookies</el-button>
@@ -96,9 +104,9 @@
               </el-form-item>
               <el-form-item label="参数：" :label-width="formLabelWidth">
                 <el-radio-group v-model="form.Parameter">
-                  <el-radio :label="0">无</el-radio>
-                  <el-radio :label="1">List</el-radio>
-                  <el-radio :label="2">Json</el-radio>
+                  <el-radio label="0">无</el-radio>
+                  <el-radio label="1">List</el-radio>
+                  <el-radio label="2">Json</el-radio>
                 </el-radio-group>
                 <div v-if="form.Parameter==1">
                   <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addParameter">新增参数</el-button>
@@ -145,8 +153,8 @@
             <el-tab-pane label="断言" name="third">
               <el-form-item label="断言：" :label-width="formLabelWidth">
                 <el-radio-group v-model="form.CaseAssert">
-                  <el-radio :label="0">无</el-radio>
-                  <el-radio :label="1">添加断言</el-radio>
+                  <el-radio label="0">无</el-radio>
+                  <el-radio label="1">添加断言</el-radio>
                 </el-radio-group>
                 <div v-if="form.CaseAssert==1">
                   <el-button size="small" type="primary" icon="el-icon-circle-plus-outline" @click="addAssert">新增断言</el-button>
@@ -257,6 +265,7 @@ export default {
   name: 'index',
   data () {
     return {
+      options: [],
       activeName: 'first',
       reportactive: 'AssertResult',
       dialogFormVisible: false,
@@ -268,7 +277,7 @@ export default {
         Casename: '',
         Casedescribe: '',
         Url: '',
-        Casemodel: '0',
+        Casemodel: '',
         Method: '0',
         HerderList: [],
         Cookies: '0',
@@ -297,16 +306,29 @@ export default {
       }
     }
   },
-  mounted: function () {
-    // this.$http.get(`http://localhost:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
-    //   console.log(response.data)
-    //   this.form = response.data
-    // },
-    // response => {
-    //   console.log('error')
-    // })
+  created () {
+    // this.editCase()
+    this.getAllModel()
   },
   methods: {
+    async getAllModel () {
+      this.$http.get('http://localhost:8081/TestModel/getAllModel').then(response => {
+        console.log(response.data)
+        this.options = response.data
+      },
+      response => {
+        console.log('error')
+      })
+    },
+    async editCase () {
+      this.$http.get(`http://localhost:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
+        console.log(response.data)
+        this.form = response.data
+      },
+      response => {
+        console.log('error')
+      })
+    },
     addHerder () {
       this.form.HerderList.push({
         hname: '',

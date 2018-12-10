@@ -82,7 +82,7 @@
             <template slot-scope="scope">
               <p style="color: #409EFF">
                 <el-tag size="mini" type="success" v-if="scope.row.Method==1">Get</el-tag>
-                <el-tag size="mini" v-if="scope.row.Method==0">Post</el-tag>
+                <el-tag size="mini" type="warning" v-if="scope.row.Method==0">Post</el-tag>
                   {{ scope.row.Url}}
               </p>
             </template>
@@ -101,13 +101,6 @@
             prop="state"
             label="状态"
             width="100">
-            <template slot-scope="scope">
-              <p style="color: #409EFF">
-                <el-tag size="mini" type="warning" v-if="scope.row.state==0">未执行</el-tag>
-                <el-tag size="mini" type="success" v-if="scope.row.state==1">成功</el-tag>
-                <el-tag size="mini" type="danger" v-if="scope.row.state==2">失败</el-tag>
-              </p>
-            </template>
           </el-table-column>
           <el-table-column
             label="操作"
@@ -148,7 +141,7 @@ export default {
   },
   methods: {
     async getCaseList () {
-      this.$http.get('http://localhost:8081/TestCase/getCaseList').then(response => {
+      this.$http.get(`http://localhost:8081/TestCase/getCaseListByCaseModel/${this.$route.params.id}`).then(response => {
         console.log(response.data)
         this.tableData = response.data
       },

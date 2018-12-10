@@ -16,9 +16,17 @@
                 <el-input v-model="form.Casedescribe" autocomplete="off" style="width: 350px"></el-input>
               </el-form-item>
               <el-form-item label="所属模块：" :label-width="formLabelWidth">
-                <el-select v-model="form.Casemodel" placeholder="请选择模块">
-                  <el-option label="POST"  :value="0"></el-option>
-                  <el-option label="GET" :value="1"></el-option>
+                <!--<el-select v-model="form.Casemodel" placeholder="请选择模块">-->
+                  <!--<el-option label="POST"  :value="0"></el-option>-->
+                  <!--<el-option label="GET" :value="1"></el-option>-->
+                <!--</el-select>-->
+                <el-select v-model="form.Casemodel" placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.id"
+                    :label="item.modelname"
+                    :value="item.id">
+                  </el-option>
                 </el-select>
               </el-form-item>
             </el-tab-pane>
@@ -229,6 +237,13 @@
                       prop="result"
                       label="状态"
                       width="180">
+                      <template slot-scope="scope">
+                        <p style="color: #409EFF">
+                          <el-tag size="mini" type="warning" v-if="scope.row.result==3">json解析失败</el-tag>
+                          <el-tag size="mini" type="success" v-if="scope.row.result==1">成功</el-tag>
+                          <el-tag size="mini" type="danger" v-if="scope.row.result==2">失败</el-tag>
+                        </p>
+                      </template>
                     </el-table-column>
                   </el-table>
                 </el-tab-pane>
@@ -257,6 +272,7 @@ export default {
   name: 'index',
   data () {
     return {
+      options: [],
       activeName: 'first',
       reportactive: 'AssertResult',
       dialogFormVisible: false,
@@ -268,7 +284,7 @@ export default {
         Casename: '',
         Casedescribe: '',
         Url: '',
-        Casemodel: '0',
+        Casemodel: '',
         Method: '0',
         HerderList: [],
         Cookies: '0',
@@ -297,16 +313,29 @@ export default {
       }
     }
   },
-  mounted: function () {
-    this.$http.get(`http://localhost:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
-      console.log(response.data)
-      this.form = response.data
-    },
-    response => {
-      console.log('error')
-    })
+  created () {
+    this.editCase()
+    this.getAllModel()
   },
   methods: {
+    async getAllModel () {
+      this.$http.get('http://localhost:8081/TestModel/getAllModel').then(response => {
+        console.log(response.data)
+        this.options = response.data
+      },
+      response => {
+        console.log('error')
+      })
+    },
+    async editCase () {
+      this.$http.get(`http://localhost:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
+        console.log(response.data)
+        this.form = response.data
+      },
+      response => {
+        console.log('error')
+      })
+    },
     addHerder () {
       this.form.HerderList.push({
         hname: '',

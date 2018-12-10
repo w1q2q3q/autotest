@@ -9,6 +9,7 @@
       </el-col>
     </el-row>
     <el-button type="primary" size="small" @click="dialogVisible = true">添加模块</el-button>
+    <el-button type="primary" size="small" @click="dialogFormVisible = true">批量执行模块</el-button>
     <el-dialog title="添加模块" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
       <el-form ref="form" :model="form" :data="form" label-width="80px">
         <el-form-item label="项目" prop="region">
@@ -71,7 +72,7 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button @click="handleClick(scope.row.id)" type="text" size="small">查看</el-button>
+              <el-button @click="getModelCaseList(scope.row.id)" type="text" size="small">查看</el-button>
               <el-button type="text" size="small">编辑</el-button>
             </template>
           </el-table-column>
@@ -104,16 +105,19 @@ export default {
       }
     }
   },
-  mounted: function () {
-    this.$http.get(`http://localhost:8081/TestModel/getModel/${this.$route.params.id}`).then(response => {
-      console.log(response.data)
-      this.tableData = response.data
-    },
-    response => {
-      console.log('error')
-    })
+  created () {
+    this.modelList()
   },
   methods: {
+    async modelList () {
+      this.$http.get(`http://localhost:8081/TestModel/getModel/${this.$route.params.id}`).then(response => {
+        console.log(response.data)
+        this.tableData = response.data
+      },
+      response => {
+        console.log('error')
+      })
+    },
     handleClose (done) {
       this.$confirm('确认关闭？')
         .then(_ => {
@@ -139,6 +143,11 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    getModelCaseList (id) {
+      this.$router.push({
+        path: `/modelcase/${id}`
       })
     }
   }
