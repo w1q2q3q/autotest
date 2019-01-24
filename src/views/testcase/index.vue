@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     async getCaseList () {
-      this.$http.get('http://127.0.0.1:8081/TestCase/getCaseList').then(response => {
+      this.$http.get('http://47.93.199.179:8081/TestCase/getCaseList').then(response => {
         console.log(response.data)
         this.tableData = response.data
       },
