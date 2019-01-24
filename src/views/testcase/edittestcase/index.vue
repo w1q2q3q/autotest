@@ -319,7 +319,7 @@ export default {
   },
   methods: {
     async getAllModel () {
-      this.$http.get('http://localhost:8081/TestModel/getAllModel').then(response => {
+      this.$http.get('http://47.93.199.179:8081/TestModel/getAllModel').then(response => {
         console.log(response.data)
         this.options = response.data
       },
@@ -328,7 +328,7 @@ export default {
       })
     },
     async editCase () {
-      this.$http.get(`http://localhost:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
+      this.$http.get(`http://47.93.199.179:8081/TestCase/editCase/${this.$route.params.id}`).then(response => {
         console.log(response.data)
         this.form = response.data
       },
@@ -401,7 +401,7 @@ export default {
     onSubmit (form) {
       this.$refs[form].validate((valid) => {
         if (valid) {
-          this.$http.post('http://localhost:8081/TestCase/addCase', JSON.stringify(this.form)).then(response => {
+          this.$http.post('http://47.93.199.179:8081/TestCase/addCase', JSON.stringify(this.form)).then(response => {
             alert('添加成功')
             this.$router.push({path: '/testcase'})
           },
@@ -420,7 +420,7 @@ export default {
       this.loading = true
       this.$refs[form].validate((valid) => {
         if (valid) {
-          this.$http.post('http://localhost:8081/TestCase/runCase', JSON.stringify(this.form)).then(response => {
+          this.$http.post('http://47.93.199.179:8081/TestCase/runCase', JSON.stringify(this.form)).then(response => {
             alert('成功')
             this.activeName = 'report'
             this.caserequest = response.data.caserequest
